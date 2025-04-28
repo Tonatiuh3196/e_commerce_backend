@@ -5,14 +5,14 @@ from typing import Optional
 
 
 class UserCreate(BaseModel):
-    nombre: str | None = None
-    ap_paterno: str | None = None
-    ap_materno: str | None = None
-    fecha: date | None = None
-    email: str | None = None
-    telefono: str | None = None
-    sexo: str | None = None
-    password : str | None = None
+    nombre: Optional[str] = None
+    ap_paterno: Optional[str] = None
+    ap_materno: Optional[str] = None
+    fecha: Optional[date] = None
+    email: Optional[str] = None
+    telefono: Optional[str] = None
+    sexo: Optional[str] = None
+    password: Optional[str] = None
 
 class UserRead(UserCreate):
     id: UUID

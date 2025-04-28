@@ -3,6 +3,7 @@ from models.user import User
 from schemas.user import UserCreate, UserUpdate
 from pydantic import TypeAdapter
 from fastapi import HTTPException
+from uuid import UUID
 
 adapter_create = TypeAdapter(UserCreate)
 adapter_update = TypeAdapter(UserUpdate)
@@ -15,17 +16,17 @@ def create_user(session: Session, user_create: UserCreate):
     session.refresh(user)
     return user
 
-def get_user(session: Session, user_id: int):
+def get_user(session: Session, user_id: UUID):
     return session.exec(select(User).where(User.id == user_id)).first()
 
-def delete_user(session: Session, user_id: int):
+def delete_user(session: Session, user_id: UUID):
     user = get_user(session, user_id)
     if not user:
         raise HTTPException(status_code=404, detail="user not found")
     session.delete(user)
     session.commit()
 
-def update_user(session: Session, user_id: int, user_update: UserCreate):
+def update_user(session: Session, user_id: UUID, user_update: UserCreate):
     user = get_user(session, user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -37,7 +38,7 @@ def update_user(session: Session, user_id: int, user_update: UserCreate):
     session.refresh(user)
     return user
 
-def patch_user(session: Session, user_id, user_patch: UserUpdate):
+def patch_user(session: Session, user_id: UUID, user_patch: UserUpdate):
     user = get_user(session, user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")

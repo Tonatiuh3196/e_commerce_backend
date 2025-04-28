@@ -5,7 +5,7 @@ class items(BaseModel):
     product_id: UUID = Field(default_factory=uuid4)
     cantidad:int | None = None
 
-class CardShoppingCreate(BaseModel):
+class CartShoppingCreate(BaseModel):
     user_id: UUID = Field(default_factory=uuid4) 
     productos: list[items] | None = None
 
